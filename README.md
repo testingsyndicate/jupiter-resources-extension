@@ -137,3 +137,7 @@ the type this resolver supports along with whether charsets are supported or not
 
 If you think your resolver will be useful for others (i.e. it's for a built-in java type), then feel free to raise a
 pull request to add it to the library!
+
+## Thanks!
+
+Thanks to [@chaosmi](https://github.com/chaosmi) for the inspiration!
