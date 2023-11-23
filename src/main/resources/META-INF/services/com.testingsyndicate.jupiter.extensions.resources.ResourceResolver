@@ -1,3 +1,5 @@
+com.testingsyndicate.jupiter.extensions.resources.resolver.ArchiveResolver$ZipFileResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.ArchiveResolver$JarFileResolver
 com.testingsyndicate.jupiter.extensions.resources.resolver.ByteArrayResolver$BoxedByteArrayResolver
 com.testingsyndicate.jupiter.extensions.resources.resolver.ByteArrayResolver$ByteArrayInputStreamResolver
 com.testingsyndicate.jupiter.extensions.resources.resolver.ByteArrayResolver$PrimitiveByteArrayResolver

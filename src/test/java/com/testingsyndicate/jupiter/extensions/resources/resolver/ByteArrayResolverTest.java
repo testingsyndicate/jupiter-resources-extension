@@ -54,7 +54,8 @@ class ByteArrayResolverTest {
       var actual = catchThrowable(() -> SUT.resolve(VALID_URL, StandardCharsets.UTF_8));
 
       // then
-      assertThat(actual).hasMessage("charset not supported for resolving instances of Byte[]");
+      assertThat(actual)
+          .hasMessage("charset not supported for resolving instances of java.lang.Byte[]");
     }
   }
 
@@ -76,7 +77,8 @@ class ByteArrayResolverTest {
 
       // then
       assertThat(actual)
-          .hasMessage("charset not supported for resolving instances of ByteArrayInputStream");
+          .hasMessage(
+              "charset not supported for resolving instances of java.io.ByteArrayInputStream");
     }
   }
 }

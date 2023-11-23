@@ -27,6 +27,6 @@ class URLResolverTest extends AbstractResolverTest {
     var actual = catchThrowable(() -> SUT.resolve(VALID_URL, StandardCharsets.UTF_8));
 
     // then
-    assertThat(actual).hasMessage("charset not supported for resolving instances of URL");
+    assertThat(actual).hasMessage("charset not supported for resolving instances of java.net.URL");
   }
 }

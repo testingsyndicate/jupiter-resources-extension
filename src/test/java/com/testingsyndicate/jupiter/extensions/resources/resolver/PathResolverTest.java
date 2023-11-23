@@ -26,6 +26,7 @@ class PathResolverTest extends AbstractResolverTest {
     var actual = catchThrowable(() -> SUT.resolve(VALID_URL, StandardCharsets.UTF_8));
 
     // then
-    assertThat(actual).hasMessage("charset not supported for resolving instances of Path");
+    assertThat(actual)
+        .hasMessage("charset not supported for resolving instances of java.nio.file.Path");
   }
 }

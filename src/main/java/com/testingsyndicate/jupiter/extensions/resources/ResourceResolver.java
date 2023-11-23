@@ -51,7 +51,7 @@ public abstract class ResourceResolver<T> {
         }
       } else if (charset != null) {
         throw new RuntimeException(
-            "charset not supported for resolving instances of " + target.getSimpleName());
+            "charset not supported for resolving instances of " + target.getTypeName());
       }
       return doResolve(url, charset);
     } catch (IOException ex) {
