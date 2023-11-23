@@ -11,6 +11,12 @@ import java.util.Optional;
 import java.util.ServiceLoader;
 import java.util.ServiceLoader.Provider;
 
+/**
+ * Resolver of a specific resource type. Implementations of this class are located using
+ * ServiceLoader and should be added to a relevant services file to be discovered.
+ *
+ * @param <T> type of the resource this resolves
+ */
 public abstract class ResourceResolver<T> {
   private static final Map<Class<?>, ResourceResolver<?>> RESOLVERS;
 

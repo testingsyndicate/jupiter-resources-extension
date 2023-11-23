@@ -9,6 +9,19 @@ import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 import org.junit.platform.commons.support.SearchOption;
 
+/**
+ * Jupiter extension to resolve resources into parameters in tests
+ *
+ * <pre> <code>
+ * {@literal @}ExtendWith(ResourceExtension.class)
+ * class SomeTests {
+ *   {@literal @}Test
+ *   void myTest({@literal @}TestResource("file.txt") String contents) {
+ *     // ...
+ *   }
+ * }
+ * </code> </pre>
+ */
 public class ResourcesExtension implements Extension, ParameterResolver {
   private static final String SEPARATOR = "/";
   private static final Namespace NAMESPACE = Namespace.create(ResourcesExtension.class);

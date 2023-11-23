@@ -69,9 +69,9 @@ publishing {
     mavenJava(MavenPublication) {
       from components.java
       pom {
-        name = 'HC-JMX'
-        description = 'Expose PoolingHttpClientConnectionManager statistics via JMX'
-        url = 'https://github.com/goughy000/hc-jmx'
+        name = 'jupiter-resources-extension'
+        description = 'Easily inject file based resources into your jupiter tests'
+        url = 'https://github.com/testingsyndicate/jupiter-resources-extension'
         licenses {
           license {
             name = 'MIT License'
@@ -86,9 +86,9 @@ publishing {
           }
         }
         scm {
-          connection = 'scm:git:git://github.com/goughy000/hc-jmx.git'
-          developerConnection = 'scm:git:git://github.com/goughy000/hc-jmx.git'
-          url = 'https://github.com/goughy000/hc-jmx.git'
+          connection = 'scm:git:git://github.com/testingsyndicate/jupiter-resources-extension.git'
+          developerConnection = 'scm:git:git://github.com/testingsyndicate/jupiter-resources-extension.git'
+          url = 'https://github.com/testingsyndicate/jupiter-resources-extension.git'
         }
       }
     }
@@ -100,6 +100,6 @@ signing {
   sign publishing.publications.mavenJava
 }
 
-def decode(encoded) {
+static def decode(encoded) {
   new String(Base64.getDecoder().decode(encoded ?: ''))
 }
