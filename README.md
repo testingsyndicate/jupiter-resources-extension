@@ -2,6 +2,25 @@
 
 Easily inject file based resources into your jupiter tests
 
+## Coordinates
+
+Maven POM
+
+```xml
+<dependency>
+  <groupId>com.testingsyndicate</groupId>
+  <artifactId>jupiter-resources-extension</artifactId>
+  <version>x.y.z</version>
+  <scope>test</scope>
+</dependency>
+```
+
+Gradle
+
+```groovy
+testImplementation 'com.testingsyndicate:jupiter-resources-extension:x.y.z'
+```
+
 ## Enabling the extension
 
 You can enable the extension on a per-test class basis using the `@ExtendWith` annotation to register
