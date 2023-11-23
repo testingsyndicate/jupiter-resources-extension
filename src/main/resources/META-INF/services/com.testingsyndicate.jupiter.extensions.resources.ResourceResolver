@@ -1,0 +1,16 @@
+com.testingsyndicate.jupiter.extensions.resources.resolver.ByteArrayResolver$BoxedByteArrayResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.ByteArrayResolver$ByteArrayInputStreamResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.ByteArrayResolver$PrimitiveByteArrayResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.CharArrayResolver$BoxedCharArrayResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.CharArrayResolver$PrimitiveCharArrayResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.FileResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.InputStreamResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.PathResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.ScannerResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.StringResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.StringResolver$CharSequenceResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.StringResolver$StringBufferResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.StringResolver$StringBuilderResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.StringResolver$StringReaderResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.URIResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.URLResolver
