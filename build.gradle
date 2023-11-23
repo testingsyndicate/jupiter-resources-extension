@@ -49,12 +49,6 @@ spotless {
   }
 }
 
-versioner {
-  startFrom {
-    major = 3
-  }
-}
-
 publishing {
   repositories {
     maven {
