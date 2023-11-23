@@ -50,6 +50,11 @@ class MyTests {
   void myTest(@TestResource("myFile.txt") String myFile) {
     // `myFile` will contain the contents of myFile.txt
   }
+
+  @Test
+  void myOtherTest(@TestResource("myFile.txt") InputStream inputStream) {
+    // `inputStream` is reading the contents of myFile.txt
+  }
 }
 ```
 
@@ -91,31 +96,31 @@ package com.example;
 class SomeTests {
   @Test
   void example1(@TestResource("file.txt") String file) {
-      // /com/example/subdir/file.txt
+    // /com/example/subdir/file.txt
   }
 
   @Test
-  void example1(@TestResource("/file.txt") String file) {
+  void example2(@TestResource("/file.txt") String file) {
     // /file.txt
   }
 
   @Test
   @TestResourceDirectory("other")
-  void example1(@TestResource("file.txt") String file) {
+  void example3(@TestResource("file.txt") String file) {
     // /com/example/other/file.txt
   }
 
   @Test
   @TestResourceDirectory("/")
-  void example1(@TestResource("file.txt") String file) {
+  void example4(@TestResource("file.txt") String file) {
     // /file.txt
   }
 
   @Test
-  void example1(
+  void example5(
     @TestResource("one.txt") String one,
     @TestResourceDirectory("/other") @TestResource("two.txt") String two) {
-    // /com/example/one.txt
+    // /com/example/subdir/one.txt
     // /other/two.txt
   }
 }
@@ -135,7 +140,7 @@ The following types are supported, however you can also [add your own](#adding-c
 | File                 | No                 |
 | InputStream          | No                 |
 | Path                 | No                 |
-| Scanner              | No                 |
+| Scanner              | Yes                |
 | String               | Yes                |
 | CharSequence         | Yes                |
 | StringBuffer         | Yes                |
