@@ -1,4 +1,105 @@
 plugins {
   id 'java-library'
+  id 'jvm-test-suite'
+  id 'maven-publish'
+  id 'signing'
+  id 'io.toolebox.git-versioner' version '1.6.5'
+  id 'com.diffplug.spotless' version '6.22.0'
 }
 
+group 'com.testingsyndicate'
+
+repositories {
+  mavenCentral()
+}
+
+java {
+  withJavadocJar()
+  withSourcesJar()
+}
+
+dependencies {
+  api 'org.junit.jupiter:junit-jupiter-api:5.10.1'
+}
+
+testing {
+  suites {
+    test {
+      useJUnitJupiter()
+      dependencies {
+        implementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
+        implementation 'org.junit.platform:junit-platform-testkit:1.10.1'
+        implementation 'org.assertj:assertj-core:3.24.2'
+        implementation 'org.mockito:mockito-core:5.7.0'
+        runtimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
+      }
+    }
+  }
+}
+
+spotless {
+  java {
+    googleJavaFormat()
+    endWithNewline()
+  }
+  groovyGradle {
+    greclipse('4.27')
+    indentWithSpaces(2)
+    endWithNewline()
+  }
+}
+
+versioner {
+  startFrom {
+    major = 3
+  }
+}
+
+publishing {
+  repositories {
+    maven {
+      url = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+      credentials {
+        username = findProperty('publishUsername')
+        password = findProperty('publishPassword')
+      }
+    }
+  }
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+      pom {
+        name = 'HC-JMX'
+        description = 'Expose PoolingHttpClientConnectionManager statistics via JMX'
+        url = 'https://github.com/goughy000/hc-jmx'
+        licenses {
+          license {
+            name = 'MIT License'
+            url = 'https://opensource.org/licenses/MIT'
+          }
+        }
+        developers {
+          developer {
+            name = 'Jack Gough'
+            organization = 'Testing Syndicate'
+            organizationUrl = 'https://testingsyndicate.com/'
+          }
+        }
+        scm {
+          connection = 'scm:git:git://github.com/goughy000/hc-jmx.git'
+          developerConnection = 'scm:git:git://github.com/goughy000/hc-jmx.git'
+          url = 'https://github.com/goughy000/hc-jmx.git'
+        }
+      }
+    }
+  }
+}
+
+signing {
+  useInMemoryPgpKeys(decode(findProperty('signingKey')), '')
+  sign publishing.publications.mavenJava
+}
+
+def decode(encoded) {
+  new String(Base64.getDecoder().decode(encoded ?: ''))
+}
