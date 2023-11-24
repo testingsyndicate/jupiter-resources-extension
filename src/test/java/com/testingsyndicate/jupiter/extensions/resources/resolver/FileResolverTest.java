@@ -29,6 +29,6 @@ class FileResolverTest extends AbstractResolverTest {
     var actual = catchThrowable(() -> SUT.resolve(url, StandardCharsets.UTF_8));
 
     // then
-    assertThat(actual).hasMessage("charset not supported for resolving instances of File");
+    assertThat(actual).hasMessage("charset not supported for resolving instances of java.io.File");
   }
 }

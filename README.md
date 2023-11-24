@@ -136,18 +136,20 @@ The following types are supported, however you can also [add your own](#adding-c
 | Byte[]               | No                 |
 | ByteArrayInputStream | No                 |
 | char[]               | Yes                |
+| CharSequence         | Yes                |
 | Character[]          | Yes                |
 | File                 | No                 |
 | InputStream          | No                 |
+| JarFile              | No                 |
 | Path                 | No                 |
 | Scanner              | Yes                |
 | String               | Yes                |
-| CharSequence         | Yes                |
 | StringBuffer         | Yes                |
 | StringBuilder        | Yes                |
 | StringReader         | Yes                |
 | URI                  | No                 |
 | URL                  | No                 |
+| ZipFile              | Yes                |
 
 ## Adding custom types
 

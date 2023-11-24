@@ -26,6 +26,7 @@ class InputStreamResolverTest extends AbstractResolverTest {
     var actual = catchThrowable(() -> sink(SUT.resolve(VALID_URL, StandardCharsets.UTF_8)));
 
     // then
-    assertThat(actual).hasMessage("charset not supported for resolving instances of InputStream");
+    assertThat(actual)
+        .hasMessage("charset not supported for resolving instances of java.io.InputStream");
   }
 }

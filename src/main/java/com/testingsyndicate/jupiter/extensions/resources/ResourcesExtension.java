@@ -87,7 +87,9 @@ public class ResourcesExtension implements Extension, ParameterResolver {
     var target = parameter.getType();
     return ResourceResolver.getResolver(target)
         .orElseThrow(
-            () -> new ParameterResolutionException("No resolver registered for type " + target));
+            () ->
+                new ParameterResolutionException(
+                    "No resolver registered for type " + target.getTypeName()));
   }
 
   private static String fullPath(ParameterContext context, String name) {

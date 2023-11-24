@@ -96,7 +96,7 @@ class ResourcesExtensionIntegrationTest {
     var results = runTest(TestStubs.class, "unsupportedType", Boolean.class);
 
     assertFailure(ParameterResolutionException.class, results)
-        .hasMessage("No resolver registered for type class java.lang.Boolean");
+        .hasMessage("No resolver registered for type java.lang.Boolean");
   }
 
   @Test
