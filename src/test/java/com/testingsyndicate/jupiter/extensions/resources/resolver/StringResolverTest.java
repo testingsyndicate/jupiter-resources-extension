@@ -22,7 +22,7 @@ class StringResolverTest {
   void returnsStringWithCharset(
       @TestResource(value = "utf16.txt", charset = "UTF-16") String actual) {
     // then
-    assertThat(actual).isEqualTo("ゼリー");
+    assertThat(actual).isEqualTo("\u30bc\u30ea\u30fc");
   }
 
   @Test
@@ -35,7 +35,7 @@ class StringResolverTest {
   void returnsCharSequenceWithCharset(
       @TestResource(value = "utf16.txt", charset = "UTF-16") CharSequence actual) {
     // then
-    assertThat(actual).isEqualTo("ゼリー");
+    assertThat(actual).isEqualTo("\u30bc\u30ea\u30fc");
   }
 
   @Test
@@ -48,7 +48,7 @@ class StringResolverTest {
   void returnsStringBuilderWithCharset(
       @TestResource(value = "utf16.txt", charset = "UTF-16") StringBuilder actual) {
     // then
-    assertThat(actual.toString()).isEqualTo("ゼリー");
+    assertThat(actual.toString()).isEqualTo("\u30bc\u30ea\u30fc");
   }
 
   @Test
@@ -61,7 +61,7 @@ class StringResolverTest {
   void returnsStringBufferWithCharset(
       @TestResource(value = "utf16.txt", charset = "UTF-16") StringBuffer actual) {
     // then
-    assertThat(actual.toString()).isEqualTo("ゼリー");
+    assertThat(actual.toString()).isEqualTo("\u30bc\u30ea\u30fc");
   }
 
   @Test
@@ -79,7 +79,7 @@ class StringResolverTest {
     // when
     try (var scanner = new Scanner(actual)) {
       // then
-      assertThat(scanner.nextLine()).isEqualTo("ゼリー");
+      assertThat(scanner.nextLine()).isEqualTo("\u30bc\u30ea\u30fc");
     }
   }
 }
