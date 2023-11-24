@@ -23,7 +23,7 @@ class CharArrayResolverTest {
     void returnsCharArrayWithCharset(
         @TestResource(value = "utf16.txt", charset = "UTF-16") char[] actual) {
       // then
-      assertThat(actual).isEqualTo(new char[] {'ゼ', 'リ', 'ー'});
+      assertThat(actual).isEqualTo(new char[] {'\u30bc', '\u30ea', '\u30fc'});
     }
   }
 
@@ -40,7 +40,7 @@ class CharArrayResolverTest {
     void returnsCharArrayWithCharset(
         @TestResource(value = "utf16.txt", charset = "UTF-16") Character[] actual) {
       // then
-      assertThat(actual).isEqualTo(new Character[] {'ゼ', 'リ', 'ー'});
+      assertThat(actual).isEqualTo(new Character[] {'\u30bc', '\u30ea', '\u30fc'});
     }
   }
 }

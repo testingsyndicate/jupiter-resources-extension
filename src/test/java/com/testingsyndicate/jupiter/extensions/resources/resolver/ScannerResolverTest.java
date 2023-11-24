@@ -21,6 +21,6 @@ class ScannerResolverTest extends AbstractResolverTest {
   void returnsScannerWithCharset(
       @TestResource(value = "utf16.txt", charset = "UTF-16") Scanner actual) {
     // then
-    assertThat(actual.nextLine()).isEqualTo("ゼリー");
+    assertThat(actual.nextLine()).isEqualTo("\u30bc\u30ea\u30fc");
   }
 }
