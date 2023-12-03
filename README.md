@@ -4,38 +4,31 @@ Easily inject file based resources into your jupiter tests
 
 ## Coordinates
 
-Maven POM
-
-```xml
-<dependency>
-  <groupId>com.testingsyndicate</groupId>
-  <artifactId>jupiter-resources-extension</artifactId>
-  <version>x.y.z</version>
-  <scope>test</scope>
-</dependency>
-```
-
-Gradle
-
-```groovy
-testImplementation 'com.testingsyndicate:jupiter-resources-extension:x.y.z'
-```
+See [Releases](https://github.com/testingsyndicate/jupiter-resources-extension/releases) for the latest maven/gradle
+coordinates and version
 
 ## Enabling the extension
 
-You can enable the extension on a per-test class basis using the `@ExtendWith` annotation to register
-the `ResourcesExtension` like so:
+If you are using at least junit v5.8 then you don't need to do anything to enable the extension, you can
+jump straight to [Injecting resources](#injecting-resources)
 
-```java
-@ExtendWith(ResourcesExtension.class)
-class MyTests {
-  // ...
-}
-```
+<details>
+  <summary>I'm using junit &lt; v5.8</summary>
 
-Alternatively the extension also advertises itself for automatic registration, providing you have enabled
-it via setting the property `junit.jupiter.extensions.autodetection.enabled` to `true`.  How you do this
-will differ depending on your build tool.
+  You can enable the extension on a per-test class basis using the `@ExtendWith` annotation to register
+  the `ResourcesExtension` like so:
+
+  ```java
+  @ExtendWith(ResourcesExtension.class)
+  class MyTests {
+    // ...
+  }
+  ```
+
+  Alternatively the extension also advertises itself for automatic registration, providing you have enabled
+  it via setting the property `junit.jupiter.extensions.autodetection.enabled` to `true`.  How you do this
+  will differ depending on your build tool.
+</details>
 
 ## Injecting resources
 

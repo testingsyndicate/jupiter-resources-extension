@@ -3,14 +3,11 @@ package com.testingsyndicate.jupiter.extensions.resources.resolver;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-import com.testingsyndicate.jupiter.extensions.resources.ResourcesExtension;
 import com.testingsyndicate.jupiter.extensions.resources.TestResource;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(ResourcesExtension.class)
 class PathResolverTest extends AbstractResolverTest {
   private static final PathResolver SUT = new PathResolver();
 
