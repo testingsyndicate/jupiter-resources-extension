@@ -32,12 +32,11 @@ jump straight to [Injecting resources](#injecting-resources)
 
 ## Injecting resources
 
-Resources can be injected into tests through parameters on test methods.  A number of different types can be used
-which are [listed here](#supported-types).  The parameter which needs to be populated must be annotated with the
-`@TestResource` annotation, which configures the path to the resource
+Resources can be injected into tests through parameters on test methods, or non-static fields in test classes.  A number
+of different types can be used which are [listed here](#supported-types).  The parameter which needs to be populated must be
+annotated with the `@TestResource` annotation, which configures the path to the resource
 
 ```java
-@ExtendWith(ResourcesExtension.class)
 class MyTests {
   @Test
   void myTest(@TestResource("myFile.txt") String myFile) {
@@ -48,6 +47,12 @@ class MyTests {
   void myOtherTest(@TestResource("myFile.txt") InputStream inputStream) {
     // `inputStream` is reading the contents of myFile.txt
   }
+
+  @TestResource("myFile.txt") String field;
+  @Test
+  void testFromField() {
+    // `field` will contain the contents of myFile.txt
+  }
 }
 ```
 
@@ -57,7 +62,6 @@ For some types, the charset can make a difference and so this can also be specif
 By default, the system default charset will be used.
 
 ```java
-@ExtendWith(ResourcesExtension.class)
 class MyTests {
   @Test
   void myTest(@TestResource(value = "myFile.txt", charset = "UTF-8") String myFile) {
@@ -79,12 +83,12 @@ You can use a `/` at the start of your filename to read from the root of the cla
 `@TestResource("/file.txt")`.
 
 You can also make use of the `@TestResourceDirectory` annotation to set a default directory to save specifying it
-on every parameter.  This annotation can be specified on a test class, method or parameter.
+on every parameter.  This annotation can be specified on a test field, parameter, method, class, parent class or package
+(in `package-info.java`).  The first annotation found in this order will be used to determine the directory.
 
 ```java
 package com.example;
 
-@ExtendWith(ResourcesExtension.class)
 @TestResourceDirectory("subdir")
 class SomeTests {
   @Test

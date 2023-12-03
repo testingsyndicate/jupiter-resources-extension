@@ -13,7 +13,7 @@ import org.junit.jupiter.api.extension.ParameterResolutionException;
 class ResourcesExtensionIntegrationTest {
 
   @Nested
-  class ResolutionTest {
+  class ParameterResolutionTest {
 
     @Test
     void resolvesFromRootDirectory(@TestResource("/root.txt") String actual) {
@@ -37,6 +37,38 @@ class ResourcesExtensionIntegrationTest {
     void resolvesFromRootSubDirectory(@TestResource("/directory/file.txt") String actual) {
       // then
       assertThat(actual).isEqualTo("i'm in a directory");
+    }
+  }
+
+  @Nested
+  class FieldResolutionTest {
+
+    @TestResource("/root.txt")
+    String root;
+
+    @TestResource("class.txt")
+    String clazz;
+
+    @TestResourceDirectory("resolver")
+    @TestResource("wibble.txt")
+    String wibble;
+
+    @Test
+    void resolvesFromRootDirectory() {
+      // then
+      assertThat(root).isEqualTo("I am ~g~root");
+    }
+
+    @Test
+    void resolvesFromClassDirectory() {
+      // then
+      assertThat(clazz).isEqualTo("class!");
+    }
+
+    @Test
+    void resolvesFromSpecifiedDirectory() {
+      // then
+      assertThat(wibble).isEqualTo("wibble");
     }
   }
 

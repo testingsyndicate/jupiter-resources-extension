@@ -7,7 +7,13 @@ import java.lang.annotation.Target;
 
 /** Specifies a default directory from which to load test resources */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.PARAMETER, ElementType.METHOD})
+@Target({
+  ElementType.TYPE,
+  ElementType.PARAMETER,
+  ElementType.METHOD,
+  ElementType.FIELD,
+  ElementType.PACKAGE
+})
 public @interface TestResourceDirectory {
   /** Directory name to set as the default */
   String value();

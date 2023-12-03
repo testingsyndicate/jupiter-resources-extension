@@ -1,13 +1,14 @@
 package com.testingsyndicate.jupiter.extensions.resources;
 
-import static org.junit.platform.commons.support.AnnotationSupport.findAnnotation;
-
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
-import java.util.Optional;
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.BeforeEachCallback;
+import org.junit.jupiter.api.extension.Extension;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
-import org.junit.platform.commons.support.SearchOption;
+import org.junit.jupiter.api.extension.ParameterContext;
+import org.junit.jupiter.api.extension.ParameterResolutionException;
+import org.junit.jupiter.api.extension.ParameterResolver;
 
 /**
  * Jupiter extension to resolve resources into parameters in tests
@@ -22,8 +23,7 @@ import org.junit.platform.commons.support.SearchOption;
  * }
  * </code> </pre>
  */
-public class ResourcesExtension implements Extension, ParameterResolver {
-  private static final String SEPARATOR = "/";
+public class ResourcesExtension implements Extension, ParameterResolver, BeforeEachCallback {
   private static final Namespace NAMESPACE = Namespace.create(ResourcesExtension.class);
 
   @Override
@@ -36,21 +36,50 @@ public class ResourcesExtension implements Extension, ParameterResolver {
   public Object resolveParameter(ParameterContext context, ExtensionContext extension)
       throws ParameterResolutionException {
 
-    var annotation = findAnnotation(context.getParameter(), TestResource.class).orElseThrow();
-    var path = fullPath(context, annotation.value());
-    var clazz = findDeclaration(context);
+    var parameter = context.getParameter();
+    var annotation = parameter.getAnnotation(TestResource.class);
+    var directory = Annotations.findHierarchical(parameter, TestResourceDirectory.class);
+    var clazz = parameter.getDeclaringExecutable().getDeclaringClass();
 
-    var resolver = findResolver(context);
-    var url = clazz.getResource(path);
+    return resolveResource(extension, annotation, directory, parameter.getType(), clazz);
+  }
+
+  @Override
+  public void beforeEach(ExtensionContext context) throws Exception {
+    var clazz = context.getRequiredTestClass();
+    var instance = context.getRequiredTestInstance();
+    for (var result : Annotations.findAnnotatedFields(clazz, TestResource.class)) {
+      var field = result.field();
+      var directory = Annotations.findHierarchical(field, TestResourceDirectory.class);
+      var type = field.getType();
+      var value = resolveResource(context, result.annotation(), directory, type, clazz);
+      field.setAccessible(true);
+      field.set(instance, value);
+    }
+  }
+
+  private static Object resolveResource(
+      ExtensionContext context,
+      TestResource annotation,
+      TestResourceDirectory directory,
+      Class<?> target,
+      Class<?> clazz) {
+    var resolver = findResolver(target);
+    var name =
+        new NameBuilder()
+            .append(directory == null ? null : directory.value())
+            .append(annotation.value())
+            .build();
+    var url = clazz.getResource(name);
 
     if (url == null) {
-      throw new ParameterResolutionException("Unable to find resource %s".formatted(path));
+      throw new ParameterResolutionException("Unable to find resource %s".formatted(name));
     }
 
     var charset = resolveCharset(annotation.charset());
 
     var resource = resolver.resolve(url, charset);
-    registerResource(extension, resource);
+    registerResource(context, resource);
     return resource;
   }
 
@@ -65,26 +94,7 @@ public class ResourcesExtension implements Extension, ParameterResolver {
     }
   }
 
-  private static Optional<TestResourceDirectory> findDirectory(ParameterContext context) {
-    var annotation = findAnnotation(context.getParameter(), TestResourceDirectory.class);
-    if (annotation.isPresent()) {
-      return annotation;
-    }
-
-    var executable = context.getDeclaringExecutable();
-    annotation = findAnnotation(executable, TestResourceDirectory.class);
-    if (annotation.isPresent()) {
-      return annotation;
-    }
-
-    var clazz = executable.getDeclaringClass();
-    return findAnnotation(
-        clazz, TestResourceDirectory.class, SearchOption.INCLUDE_ENCLOSING_CLASSES);
-  }
-
-  private static ResourceResolver<?> findResolver(ParameterContext context) {
-    var parameter = context.getParameter();
-    var target = parameter.getType();
+  private static ResourceResolver<?> findResolver(Class<?> target) {
     return ResourceResolver.getResolver(target)
         .orElseThrow(
             () ->
@@ -92,29 +102,9 @@ public class ResourcesExtension implements Extension, ParameterResolver {
                     "No resolver registered for type " + target.getTypeName()));
   }
 
-  private static String fullPath(ParameterContext context, String name) {
-    var directory = findDirectory(context);
-    if (name.startsWith(SEPARATOR) || directory.isEmpty()) {
-      return name;
-    }
-
-    var path = directory.get().value();
-    var builder = new StringBuilder(path);
-    if (!path.endsWith(SEPARATOR)) {
-      builder.append(SEPARATOR);
-    }
-    builder.append(name);
-
-    return builder.toString();
-  }
-
   private static void registerResource(ExtensionContext context, Object resource) {
     if (resource instanceof AutoCloseable closeable) {
       context.getStore(NAMESPACE).put(resource, new QuietCloseable(closeable));
     }
-  }
-
-  private static Class<?> findDeclaration(ParameterContext context) {
-    return context.getParameter().getDeclaringExecutable().getDeclaringClass();
   }
 }
