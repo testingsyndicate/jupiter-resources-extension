@@ -8,10 +8,8 @@ import com.testingsyndicate.jupiter.extensions.resources.TestSupport.TestKitTest
 import java.nio.charset.UnsupportedCharsetException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 
-@ExtendWith(ResourcesExtension.class)
 class ResourcesExtensionIntegrationTest {
 
   @Nested
@@ -108,7 +106,6 @@ class ResourcesExtensionIntegrationTest {
         .hasCauseInstanceOf(UnsupportedCharsetException.class);
   }
 
-  @ExtendWith(ResourcesExtension.class)
   static class TestStubs {
 
     @TestKitTest

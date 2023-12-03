@@ -4,7 +4,6 @@ import static java.util.Collections.list;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-import com.testingsyndicate.jupiter.extensions.resources.ResourcesExtension;
 import com.testingsyndicate.jupiter.extensions.resources.TestResource;
 import com.testingsyndicate.jupiter.extensions.resources.resolver.ArchiveResolver.JarFileResolver;
 import java.nio.charset.StandardCharsets;
@@ -12,9 +11,7 @@ import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(ResourcesExtension.class)
 class ArchiveResolverTest {
 
   @Nested

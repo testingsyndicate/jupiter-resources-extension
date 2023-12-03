@@ -3,7 +3,6 @@ package com.testingsyndicate.jupiter.extensions.resources.resolver;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-import com.testingsyndicate.jupiter.extensions.resources.ResourcesExtension;
 import com.testingsyndicate.jupiter.extensions.resources.TestResource;
 import com.testingsyndicate.jupiter.extensions.resources.resolver.ByteArrayResolver.BoxedByteArrayResolver;
 import com.testingsyndicate.jupiter.extensions.resources.resolver.ByteArrayResolver.ByteArrayInputStreamResolver;
@@ -12,12 +11,10 @@ import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 class ByteArrayResolverTest {
 
   @Nested
-  @ExtendWith(ResourcesExtension.class)
   class PrimitiveByteArrayResolverTest extends AbstractResolverTest {
     private static final PrimitiveByteArrayResolver SUT = new PrimitiveByteArrayResolver();
 
@@ -38,7 +35,6 @@ class ByteArrayResolverTest {
   }
 
   @Nested
-  @ExtendWith(ResourcesExtension.class)
   class BoxedByteArrayResolverTest extends AbstractResolverTest {
     private static final BoxedByteArrayResolver SUT = new BoxedByteArrayResolver();
 
@@ -60,7 +56,6 @@ class ByteArrayResolverTest {
   }
 
   @Nested
-  @ExtendWith(ResourcesExtension.class)
   class ByteArrayInputStreamResolverTest extends AbstractResolverTest {
     private static final ByteArrayInputStreamResolver SUT = new ByteArrayInputStreamResolver();
 

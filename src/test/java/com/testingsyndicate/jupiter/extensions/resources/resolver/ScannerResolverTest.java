@@ -2,13 +2,10 @@ package com.testingsyndicate.jupiter.extensions.resources.resolver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.testingsyndicate.jupiter.extensions.resources.ResourcesExtension;
 import com.testingsyndicate.jupiter.extensions.resources.TestResource;
 import java.util.Scanner;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(ResourcesExtension.class)
 class ScannerResolverTest extends AbstractResolverTest {
 
   @Test
