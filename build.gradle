@@ -4,7 +4,7 @@ plugins {
   id 'maven-publish'
   id 'signing'
   id 'io.toolebox.git-versioner' version '1.6.5'
-  id 'com.diffplug.spotless' version '6.22.0'
+  id 'com.diffplug.spotless' version '6.23.3'
 }
 
 group 'com.testingsyndicate'
@@ -43,7 +43,7 @@ spotless {
     endWithNewline()
   }
   groovyGradle {
-    greclipse('4.27')
+    greclipse()
     indentWithSpaces(2)
     endWithNewline()
   }

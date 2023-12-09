@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 /** Specifies the options for injecting a resource into a test parameter. */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.PARAMETER)
+@Target({ElementType.PARAMETER, ElementType.FIELD})
 @ExtendWith(ResourcesExtension.class)
 public @interface TestResource {
   /** Name of the file of the resource to be injected */
