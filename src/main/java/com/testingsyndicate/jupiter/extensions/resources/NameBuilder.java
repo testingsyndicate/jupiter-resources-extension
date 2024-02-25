@@ -1,10 +1,10 @@
 package com.testingsyndicate.jupiter.extensions.resources;
 
-class NameBuilder {
+public final class NameBuilder {
   private static final String SEPARATOR = "/";
   private final StringBuilder name = new StringBuilder();
 
-  NameBuilder() {}
+  public NameBuilder() {}
 
   public NameBuilder append(String part) {
     if (part == null) {
@@ -24,5 +24,10 @@ class NameBuilder {
 
   public String build() {
     return name.toString();
+  }
+
+  @Override
+  public String toString() {
+    return build();
   }
 }

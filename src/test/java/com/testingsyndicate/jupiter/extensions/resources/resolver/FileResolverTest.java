@@ -20,10 +20,11 @@ class FileResolverTest extends AbstractResolverTest {
   @Test
   void throwsWithCharset() {
     // given
+    var context = context();
     var url = url("wibble.txt");
 
     // when
-    var actual = catchThrowable(() -> SUT.resolve(url, StandardCharsets.UTF_8));
+    var actual = catchThrowable(() -> SUT.resolve(context, url, StandardCharsets.UTF_8));
 
     // then
     assertThat(actual).hasMessage("charset not supported for resolving instances of java.io.File");

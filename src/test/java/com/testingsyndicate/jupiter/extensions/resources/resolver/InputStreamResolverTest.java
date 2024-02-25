@@ -19,8 +19,12 @@ class InputStreamResolverTest extends AbstractResolverTest {
 
   @Test
   void throwsWithCharset() {
+    // given
+    var context = context();
+
     // when
-    var actual = catchThrowable(() -> sink(SUT.resolve(VALID_URL, StandardCharsets.UTF_8)));
+    var actual =
+        catchThrowable(() -> sink(SUT.resolve(context, VALID_URL, StandardCharsets.UTF_8)));
 
     // then
     assertThat(actual)

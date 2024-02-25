@@ -20,8 +20,11 @@ class URIResolverTest extends AbstractResolverTest {
 
   @Test
   void throwsWithCharset() {
+    // given
+    var context = context();
+
     // when
-    var actual = catchThrowable(() -> SUT.resolve(VALID_URL, StandardCharsets.UTF_8));
+    var actual = catchThrowable(() -> SUT.resolve(context, VALID_URL, StandardCharsets.UTF_8));
 
     // then
     assertThat(actual).hasMessage("charset not supported for resolving instances of java.net.URI");

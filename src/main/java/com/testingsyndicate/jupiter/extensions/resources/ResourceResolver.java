@@ -43,7 +43,7 @@ public abstract class ResourceResolver<T> {
     return target;
   }
 
-  public final T resolve(URL url, Charset charset) {
+  public final T resolve(ResolutionContext context, URL url, Charset charset) {
     try {
       if (charsetSupported) {
         if (charset == null) {
@@ -53,13 +53,19 @@ public abstract class ResourceResolver<T> {
         throw new RuntimeException(
             "charset not supported for resolving instances of " + target.getTypeName());
       }
-      return doResolve(url, charset);
+      return doResolve(context, url, charset);
     } catch (IOException ex) {
       throw new UncheckedIOException(ex);
     }
   }
 
-  protected abstract T doResolve(URL url, Charset charset) throws IOException;
+  protected T doResolve(ResolutionContext context, URL url, Charset charset) throws IOException {
+    return doResolve(url, charset);
+  }
+
+  protected T doResolve(URL url, Charset charset) throws IOException {
+    throw new UnsupportedOperationException();
+  }
 
   static {
     RESOLVERS =
@@ -69,5 +75,11 @@ public abstract class ResourceResolver<T> {
                 toUnmodifiableMap(
                     resolver -> (Class<?>) resolver.getTarget(),
                     resolver -> (ResourceResolver<?>) resolver));
+  }
+
+  public interface ResolutionContext {
+    String name();
+
+    Class<?> sourceClass();
   }
 }

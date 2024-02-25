@@ -19,7 +19,7 @@ class ResourceResolverTest {
     var sut = new TestResolver(cause);
 
     // when
-    var actual = catchThrowable(() -> sut.resolve(null, null));
+    var actual = catchThrowable(() -> sut.resolve(null, null, null));
 
     // then
     assertThat(actual).isInstanceOf(UncheckedIOException.class).hasCauseReference(cause);

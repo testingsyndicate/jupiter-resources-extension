@@ -1,5 +1,6 @@
 package com.testingsyndicate.jupiter.extensions.resources;
 
+import com.testingsyndicate.jupiter.extensions.resources.ResourceResolver.ResolutionContext;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
@@ -78,7 +79,8 @@ public class ResourcesExtension implements Extension, ParameterResolver, BeforeE
 
     var charset = resolveCharset(annotation.charset());
 
-    var resource = resolver.resolve(url, charset);
+    var resolutionContext = new ExtensionResolutionContext(name, clazz);
+    var resource = resolver.resolve(resolutionContext, url, charset);
     registerResource(context, resource);
     return resource;
   }
@@ -107,4 +109,7 @@ public class ResourcesExtension implements Extension, ParameterResolver, BeforeE
       context.getStore(NAMESPACE).put(resource, new QuietCloseable(closeable));
     }
   }
+
+  private record ExtensionResolutionContext(String name, Class<?> sourceClass)
+      implements ResolutionContext {}
 }

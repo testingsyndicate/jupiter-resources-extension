@@ -1,5 +1,6 @@
 package com.testingsyndicate.jupiter.extensions.resources.resolver;
 
+import com.testingsyndicate.jupiter.extensions.resources.ResourceResolver.ResolutionContext;
 import java.io.Closeable;
 import java.io.IOException;
 import java.net.URL;
@@ -17,5 +18,19 @@ abstract class AbstractResolverTest {
     } catch (IOException ex) {
       // ignored
     }
+  }
+
+  ResolutionContext context() {
+    return new ResolutionContext() {
+      @Override
+      public String name() {
+        return null;
+      }
+
+      @Override
+      public Class<?> sourceClass() {
+        return AbstractResolverTest.this.getClass();
+      }
+    };
   }
 }
