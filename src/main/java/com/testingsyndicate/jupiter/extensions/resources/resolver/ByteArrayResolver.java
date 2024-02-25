@@ -5,7 +5,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 
 public class ByteArrayResolver {
@@ -15,7 +14,7 @@ public class ByteArrayResolver {
     }
 
     @Override
-    protected byte[] doResolve(URL url, Charset charset) throws IOException {
+    protected byte[] doResolve(ResolutionContext context, URL url) throws IOException {
       return toByteArray(url);
     }
   }
@@ -26,7 +25,7 @@ public class ByteArrayResolver {
     }
 
     @Override
-    protected Byte[] doResolve(URL url, Charset charset) throws IOException {
+    protected Byte[] doResolve(ResolutionContext context, URL url) throws IOException {
       byte[] primitive = toByteArray(url);
       var boxed = new Byte[primitive.length];
       Arrays.setAll(boxed, i -> primitive[i]);
@@ -40,7 +39,8 @@ public class ByteArrayResolver {
     }
 
     @Override
-    protected ByteArrayInputStream doResolve(URL url, Charset charset) throws IOException {
+    protected ByteArrayInputStream doResolve(ResolutionContext context, URL url)
+        throws IOException {
       return new ByteArrayInputStream(toByteArray(url));
     }
   }

@@ -3,6 +3,7 @@ package com.testingsyndicate.jupiter.extensions.resources;
 import com.testingsyndicate.jupiter.extensions.resources.ResourceResolver.ResolutionContext;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
+import java.util.Optional;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.Extension;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -71,26 +72,26 @@ public class ResourcesExtension implements Extension, ParameterResolver, BeforeE
             .append(directory == null ? null : directory.value())
             .append(annotation.value())
             .build();
-    var url = clazz.getResource(name);
+    var charset = resolveCharset(annotation.charset());
+    var resolutionContext = new ExtensionResolutionContext(name, clazz, charset);
 
+    var url = clazz.getResource(name);
     if (url == null) {
       throw new ParameterResolutionException("Unable to find resource %s".formatted(name));
     }
 
-    var charset = resolveCharset(annotation.charset());
-
-    var resolutionContext = new ExtensionResolutionContext(name, clazz);
-    var resource = resolver.resolve(resolutionContext, url, charset);
+    var resource = resolver.resolve(resolutionContext, url);
     registerResource(context, resource);
     return resource;
   }
 
-  private static Charset resolveCharset(String name) {
+  private static Optional<Charset> resolveCharset(String name) {
     if (name == null || name.isEmpty()) {
-      return null;
+      return Optional.empty();
     }
     try {
-      return Charset.forName(name);
+      var charset = Charset.forName(name);
+      return Optional.of(charset);
     } catch (UnsupportedCharsetException ex) {
       throw new ParameterResolutionException("Unsupported charset " + name, ex);
     }
@@ -110,6 +111,6 @@ public class ResourcesExtension implements Extension, ParameterResolver, BeforeE
     }
   }
 
-  private record ExtensionResolutionContext(String name, Class<?> sourceClass)
-      implements ResolutionContext {}
+  private record ExtensionResolutionContext(
+      String name, Class<?> sourceClass, Optional<Charset> charset) implements ResolutionContext {}
 }

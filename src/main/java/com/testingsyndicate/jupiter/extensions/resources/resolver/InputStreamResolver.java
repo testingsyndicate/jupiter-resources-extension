@@ -4,7 +4,6 @@ import com.testingsyndicate.jupiter.extensions.resources.ResourceResolver;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.charset.Charset;
 
 public class InputStreamResolver extends ResourceResolver<InputStream> {
   public InputStreamResolver() {
@@ -12,7 +11,7 @@ public class InputStreamResolver extends ResourceResolver<InputStream> {
   }
 
   @Override
-  protected InputStream doResolve(URL url, Charset charset) throws IOException {
+  protected InputStream doResolve(ResolutionContext context, URL url) throws IOException {
     return url.openStream();
   }
 }

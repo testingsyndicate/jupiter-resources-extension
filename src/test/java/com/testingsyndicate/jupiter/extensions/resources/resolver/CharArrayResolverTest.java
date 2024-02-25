@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class CharArrayResolverTest {
 
   @Nested
-  class PrimitiveCharArrayResolverTest extends AbstractResolverTest {
+  class PrimitiveCharArrayResolverTest {
     @Test
     void returnsCharArray(@TestResource("wibble.txt") char[] actual) {
       // then
@@ -25,7 +25,7 @@ class CharArrayResolverTest {
   }
 
   @Nested
-  class BoxedCharArrayResolverTest extends AbstractResolverTest {
+  class BoxedCharArrayResolverTest {
     @Test
     void returnsCharArray(@TestResource("wibble.txt") Character[] actual) {
       // then

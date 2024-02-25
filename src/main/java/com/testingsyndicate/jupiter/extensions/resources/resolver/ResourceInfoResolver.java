@@ -5,16 +5,14 @@ import com.testingsyndicate.jupiter.extensions.resources.ResourceInfo;
 import com.testingsyndicate.jupiter.extensions.resources.ResourceResolver;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 
 public class ResourceInfoResolver extends ResourceResolver<ResourceInfo> {
   public ResourceInfoResolver() {
-    super(ResourceInfo.class, false);
+    super(ResourceInfo.class);
   }
 
   @Override
-  protected ResourceInfo doResolve(ResolutionContext context, URL url, Charset charset)
-      throws IOException {
+  protected ResourceInfo doResolve(ResolutionContext context, URL url) throws IOException {
     var name = context.name();
     var fullName = fullName(context.sourceClass(), name);
 

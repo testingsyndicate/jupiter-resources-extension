@@ -7,7 +7,6 @@ import com.testingsyndicate.jupiter.extensions.resources.ResourceResolver;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import org.junit.jupiter.api.Test;
 
 class ResourceResolverTest {
@@ -19,7 +18,7 @@ class ResourceResolverTest {
     var sut = new TestResolver(cause);
 
     // when
-    var actual = catchThrowable(() -> sut.resolve(null, null, null));
+    var actual = catchThrowable(() -> sut.resolve(null, null));
 
     // then
     assertThat(actual).isInstanceOf(UncheckedIOException.class).hasCauseReference(cause);
@@ -34,7 +33,7 @@ class ResourceResolverTest {
     }
 
     @Override
-    protected String doResolve(URL url, Charset charset) throws IOException {
+    protected String doResolve(ResolutionContext context, URL url) throws IOException {
       throw ex;
     }
   }

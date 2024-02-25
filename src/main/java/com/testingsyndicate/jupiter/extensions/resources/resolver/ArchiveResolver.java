@@ -16,22 +16,23 @@ public class ArchiveResolver {
 
   public static class ZipFileResolver extends ResourceResolver<ZipFile> {
     public ZipFileResolver() {
-      super(ZipFile.class, true);
+      super(ZipFile.class);
     }
 
     @Override
-    protected ZipFile doResolve(URL url, Charset charset) throws IOException {
+    protected ZipFile doResolve(ResolutionContext context, URL url) throws IOException {
+      var charset = context.charset().orElseGet(Charset::defaultCharset);
       return new ZipFile(toFile(url), charset);
     }
   }
 
   public static class JarFileResolver extends ResourceResolver<JarFile> {
     public JarFileResolver() {
-      super(JarFile.class, false);
+      super(JarFile.class);
     }
 
     @Override
-    protected JarFile doResolve(URL url, Charset charset) throws IOException {
+    protected JarFile doResolve(ResolutionContext context, URL url) throws IOException {
       return new JarFile(toFile(url));
     }
   }
