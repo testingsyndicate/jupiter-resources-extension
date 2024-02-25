@@ -71,7 +71,7 @@ class MyTests {
 ```
 
 Not all types support charset, for example when reading into a `byte[]`.  If you specify a charset on an unsupported type
-then an exception will be thrown.
+then the charset will be ignored.
 
 ## Choosing directory
 
@@ -123,6 +123,33 @@ class SomeTests {
 }
 ```
 
+## ResourceInfo
+
+A built-in type, `ResourceInfo` can also be injected, this type provides some information about the resource itself, and
+also allows you to re-resolve into other types later in the test.
+
+```java
+package com.example;
+
+class MyTests {
+  @Test
+  void testResourceInfo(@TestResource("file.txt") ResourceInfo info) {
+    var name = info.getName(); // "file.txt"
+    var fullName = info.getFullName(); // "com/example/file.txt"
+
+    // content of file.txt as if it was injected as a string in the first place
+    var content = info.resolveTo(String.class);
+    
+    // an InputStream reading the content of file.txt
+    try (var is = info.resolveTo(InputStream.class)) {
+      is.read();
+    } // remember to close!
+  }
+}
+```
+
+Note that if you call `resolveTo` for a closeable type, it's your responsibility to close it.
+
 ## Supported Types
 
 The following types are supported, however you can also [add your own](#adding-custom-types)!
@@ -139,6 +166,7 @@ The following types are supported, however you can also [add your own](#adding-c
 | InputStream          | No                 |
 | JarFile              | No                 |
 | Path                 | No                 |
+| ResourceInfo         | Yes*               |
 | Scanner              | Yes                |
 | String               | Yes                |
 | StringBuffer         | Yes                |
@@ -148,6 +176,8 @@ The following types are supported, however you can also [add your own](#adding-c
 | URL                  | No                 |
 | ZipFile              | Yes                |
 
+*ResourceInfo passes charset information down when calling `ResouceInfo::resolveTo(T)`
+
 ## Adding custom types
 
 Each type is loaded using an implementation of a `ResourceResolver<>`.  Implementations are loaded automatically
@@ -156,7 +186,7 @@ and then adding a line with the fully qualified class name of your implementatio
 it like any of the built-in ones!
 
 You should implement the `doResolve` method in your implementation.  When calling the super constructor, specify
-the type this resolver supports along with whether charsets are supported or not.
+the type this resolver supports.
 
 If you think your resolver will be useful for others (i.e. it's for a built-in java type), then feel free to raise a
 pull request to add it to the library!
