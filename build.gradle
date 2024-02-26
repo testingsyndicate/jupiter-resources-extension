@@ -3,8 +3,8 @@ plugins {
   id 'jvm-test-suite'
   id 'maven-publish'
   id 'signing'
-  id 'io.toolebox.git-versioner' version '1.6.5'
-  id 'com.diffplug.spotless' version '6.23.3'
+  id 'uk.co.developmentanddinosaurs.git-versioner' version '2.0.1'
+  id 'com.diffplug.spotless' version '6.25.0'
 }
 
 group 'com.testingsyndicate'
@@ -19,7 +19,7 @@ java {
 }
 
 dependencies {
-  api 'org.junit.jupiter:junit-jupiter-api:5.10.1'
+  api 'org.junit.jupiter:junit-jupiter-api:5.10.2'
 }
 
 testing {
@@ -27,11 +27,11 @@ testing {
     test {
       useJUnitJupiter()
       dependencies {
-        implementation 'org.junit.jupiter:junit-jupiter-api:5.10.1'
-        implementation 'org.junit.platform:junit-platform-testkit:1.10.1'
-        implementation 'org.assertj:assertj-core:3.24.2'
-        implementation 'org.mockito:mockito-core:5.7.0'
-        runtimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.1'
+        implementation 'org.junit.jupiter:junit-jupiter-api:5.10.2'
+        implementation 'org.junit.platform:junit-platform-testkit:1.10.2'
+        implementation 'org.assertj:assertj-core:3.25.3'
+        implementation 'org.mockito:mockito-core:5.10.0'
+        runtimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.2'
       }
     }
   }
