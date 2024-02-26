@@ -6,7 +6,7 @@ import com.testingsyndicate.jupiter.extensions.resources.TestResource;
 import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 
-class ScannerResolverTest extends AbstractResolverTest {
+class ScannerResolverTest {
 
   @Test
   void returnsScanner(@TestResource("wibble.txt") Scanner actual) {

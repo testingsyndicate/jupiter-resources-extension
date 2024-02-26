@@ -21,7 +21,6 @@ public abstract class ResourceResolver<T> {
   private static final Map<Class<?>, ResourceResolver<?>> RESOLVERS;
 
   private final Class<? extends T> target;
-  private final boolean charsetSupported;
 
   public static <T> Optional<ResourceResolver<T>> getResolver(Class<T> target) {
     // noinspection unchecked
@@ -31,35 +30,22 @@ public abstract class ResourceResolver<T> {
   }
 
   protected ResourceResolver(Class<? extends T> target) {
-    this(target, false);
-  }
-
-  protected ResourceResolver(Class<? extends T> target, boolean charsetSupported) {
     this.target = target;
-    this.charsetSupported = charsetSupported;
   }
 
   public Class<? extends T> getTarget() {
     return target;
   }
 
-  public final T resolve(URL url, Charset charset) {
+  public final T resolve(ResolutionContext context, URL url) {
     try {
-      if (charsetSupported) {
-        if (charset == null) {
-          charset = Charset.defaultCharset();
-        }
-      } else if (charset != null) {
-        throw new RuntimeException(
-            "charset not supported for resolving instances of " + target.getTypeName());
-      }
-      return doResolve(url, charset);
-    } catch (IOException ex) {
-      throw new UncheckedIOException(ex);
+      return doResolve(context, url);
+    } catch (IOException iox) {
+      throw new UncheckedIOException(iox);
     }
   }
 
-  protected abstract T doResolve(URL url, Charset charset) throws IOException;
+  protected abstract T doResolve(ResolutionContext context, URL url) throws IOException;
 
   static {
     RESOLVERS =
@@ -69,5 +55,13 @@ public abstract class ResourceResolver<T> {
                 toUnmodifiableMap(
                     resolver -> (Class<?>) resolver.getTarget(),
                     resolver -> (ResourceResolver<?>) resolver));
+  }
+
+  public interface ResolutionContext {
+    String name();
+
+    Class<?> sourceClass();
+
+    Optional<Charset> charset();
   }
 }

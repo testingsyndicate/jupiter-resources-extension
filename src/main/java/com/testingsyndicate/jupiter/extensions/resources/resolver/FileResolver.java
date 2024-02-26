@@ -4,7 +4,6 @@ import com.testingsyndicate.jupiter.extensions.resources.ResourceResolver;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
-import java.nio.charset.Charset;
 
 public class FileResolver extends ResourceResolver<File> {
   public FileResolver() {
@@ -12,7 +11,7 @@ public class FileResolver extends ResourceResolver<File> {
   }
 
   @Override
-  protected File doResolve(URL url, Charset charset) {
+  protected File doResolve(ResolutionContext context, URL url) {
     return new File(URI.create(url.toString()));
   }
 }

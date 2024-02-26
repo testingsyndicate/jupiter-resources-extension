@@ -8,11 +8,12 @@ import java.util.Scanner;
 
 public class ScannerResolver extends ResourceResolver<Scanner> {
   public ScannerResolver() {
-    super(Scanner.class, true);
+    super(Scanner.class);
   }
 
   @Override
-  protected Scanner doResolve(URL url, Charset charset) throws IOException {
+  protected Scanner doResolve(ResolutionContext context, URL url) throws IOException {
+    var charset = context.charset().orElseGet(Charset::defaultCharset);
     return new Scanner(url.openStream(), charset);
   }
 }

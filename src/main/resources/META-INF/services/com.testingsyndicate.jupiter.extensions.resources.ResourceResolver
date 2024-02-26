@@ -6,6 +6,7 @@ com.testingsyndicate.jupiter.extensions.resources.resolver.ByteArrayResolver$Pri
 com.testingsyndicate.jupiter.extensions.resources.resolver.CharArrayResolver$BoxedCharArrayResolver
 com.testingsyndicate.jupiter.extensions.resources.resolver.CharArrayResolver$PrimitiveCharArrayResolver
 com.testingsyndicate.jupiter.extensions.resources.resolver.FileResolver
+com.testingsyndicate.jupiter.extensions.resources.resolver.ResourceInfoResolver
 com.testingsyndicate.jupiter.extensions.resources.resolver.InputStreamResolver
 com.testingsyndicate.jupiter.extensions.resources.resolver.PathResolver
 com.testingsyndicate.jupiter.extensions.resources.resolver.ScannerResolver

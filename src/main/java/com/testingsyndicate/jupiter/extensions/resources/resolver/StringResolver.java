@@ -9,15 +9,16 @@ import java.nio.charset.Charset;
 
 public class StringResolver extends ResourceResolver<String> {
   public StringResolver() {
-    super(String.class, true);
+    super(String.class);
   }
 
   @Override
-  public String doResolve(URL url, Charset charset) throws IOException {
-    return toString(url, charset);
+  public String doResolve(ResolutionContext context, URL url) throws IOException {
+    return toString(context, url);
   }
 
-  private static String toString(URL url, Charset charset) throws IOException {
+  private static String toString(ResolutionContext context, URL url) throws IOException {
+    var charset = context.charset().orElseGet(Charset::defaultCharset);
     try (var is = url.openStream();
         var os = new ByteArrayOutputStream()) {
       is.transferTo(os);
@@ -27,45 +28,45 @@ public class StringResolver extends ResourceResolver<String> {
 
   public static class CharSequenceResolver extends ResourceResolver<CharSequence> {
     public CharSequenceResolver() {
-      super(CharSequence.class, true);
+      super(CharSequence.class);
     }
 
     @Override
-    protected CharSequence doResolve(URL url, Charset charset) throws IOException {
-      return StringResolver.toString(url, charset);
+    protected CharSequence doResolve(ResolutionContext context, URL url) throws IOException {
+      return StringResolver.toString(context, url);
     }
   }
 
   public static class StringBuilderResolver extends ResourceResolver<StringBuilder> {
     public StringBuilderResolver() {
-      super(StringBuilder.class, true);
+      super(StringBuilder.class);
     }
 
     @Override
-    protected StringBuilder doResolve(URL url, Charset charset) throws IOException {
-      return new StringBuilder(StringResolver.toString(url, charset));
+    protected StringBuilder doResolve(ResolutionContext context, URL url) throws IOException {
+      return new StringBuilder(StringResolver.toString(context, url));
     }
   }
 
   public static class StringBufferResolver extends ResourceResolver<StringBuffer> {
     public StringBufferResolver() {
-      super(StringBuffer.class, true);
+      super(StringBuffer.class);
     }
 
     @Override
-    protected StringBuffer doResolve(URL url, Charset charset) throws IOException {
-      return new StringBuffer(StringResolver.toString(url, charset));
+    protected StringBuffer doResolve(ResolutionContext context, URL url) throws IOException {
+      return new StringBuffer(StringResolver.toString(context, url));
     }
   }
 
   public static class StringReaderResolver extends ResourceResolver<StringReader> {
     public StringReaderResolver() {
-      super(StringReader.class, true);
+      super(StringReader.class);
     }
 
     @Override
-    protected StringReader doResolve(URL url, Charset charset) throws IOException {
-      return new StringReader(StringResolver.toString(url, charset));
+    protected StringReader doResolve(ResolutionContext context, URL url) throws IOException {
+      return new StringReader(StringResolver.toString(context, url));
     }
   }
 }
